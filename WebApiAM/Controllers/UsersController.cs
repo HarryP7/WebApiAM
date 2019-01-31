@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApiAM.Models;
 
 namespace WebApiAM.Controllers
@@ -20,9 +21,9 @@ namespace WebApiAM.Controllers
             {
                db.Roles.Add(new Role { Name = "admin" });
                db.Roles.Add(new Role { Name = "user" });
-               db.Users.Add(new User { FullName = "Tom Riddle Marvolo", Login = "Lord VolnDeMort", Email = "user@gmail.com", RoleId = 2, Phone = "9 999 999 9999"});
-               db.Users.Add(new User { FullName = "Darth Vader (Sith)", Login = "Darth Vader", Email = "user2@gmail.com", RoleId = 2, Phone = "8 888 888 8888" });
-               db.Users.Add(new User { FullName = "Thanos", Login = "Безумный Титан", Email = "admin@gmail.com", RoleId = 1, Phone = "0000" });
+               db.Users.Add(new User { FullName = "Tom Riddle Marvolo", Login = "Lord VolnDeMort", Email = "user@gmail.com", RoleId = 2, Phone = "9 999 999 9999", Uid = "999d9900-d99d-99d9-9999-0099999999990000"});
+               db.Users.Add(new User { FullName = "Darth Vader (Sith)", Login = "Darth Vader", Email = "user2@gmail.com", RoleId = 2, Phone = "8 888 888 8888", Uid = "880e8800-e88b-88d8-a888-888888880000" });
+               db.Users.Add(new User { FullName = "Thanos", Login = "Mad Titan", Email = "admin@gmail.com", RoleId = 1, Phone = "0000", Uid = "0000e0000-t0t-00t0-t000-00000000000" });
                 db.SaveChanges();
             }
         }
@@ -30,7 +31,7 @@ namespace WebApiAM.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return db.Users.ToList();
+            return db.Users.Include(p => p.Role).ToList();
         }
 
         // GET: api/users/5

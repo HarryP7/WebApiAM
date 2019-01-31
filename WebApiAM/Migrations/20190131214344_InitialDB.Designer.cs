@@ -10,7 +10,7 @@ using WebApiAM.Models;
 namespace WebApiAM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190131153013_InitialDB")]
+    [Migration("20190131214344_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,39 @@ namespace WebApiAM.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebApiAM.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(6, 2)");
+
+                    b.Property<DateTime>("DatePlace");
+
+                    b.Property<DateTime>("EvDate");
+
+                    b.Property<int>("Fk_user");
+
+                    b.Property<decimal>("Lat")
+                        .HasColumnType("decimal(10, 6)");
+
+                    b.Property<decimal>("Lng")
+                        .HasColumnType("decimal(10, 6)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Uid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_user");
+
+                    b.ToTable("Events");
+                });
 
             modelBuilder.Entity("WebApiAM.Models.Role", b =>
                 {
@@ -40,25 +73,39 @@ namespace WebApiAM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Login");
+                    b.Property<string>("Login")
+                        .HasColumnType("varchar(30)");
 
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
 
-                    b.Property<string>("Phone");
+                    b.Property<string>("Phone")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<int>("RoleId");
+
+                    b.Property<string>("Uid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebApiAM.Models.Event", b =>
+                {
+                    b.HasOne("WebApiAM.Models.User", "User")
+                        .WithMany("Events")
+                        .HasForeignKey("Fk_user")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApiAM.Models.User", b =>

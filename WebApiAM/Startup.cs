@@ -27,7 +27,7 @@ namespace WebApiAM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string con = "Server=(LocalDb)\\MSSQLLocalDB;Database=WebApiDbAMv2;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string con = "Server=(LocalDb)\\MSSQLLocalDB;Database=WebApiAM;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(con));
             services.AddMvc();//.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
