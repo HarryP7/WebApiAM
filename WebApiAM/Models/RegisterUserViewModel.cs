@@ -10,9 +10,10 @@ namespace WebApiAM.Models
     {
         [Required(ErrorMessage = "Введите имя пользователя"), Display(Name = "Имя пользователя")]
         public string FullName { get; set; }
-        [Required(ErrorMessage = "Введите пароль")]
+        [Required(ErrorMessage = "Не указан пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Введите Email")]
+        [Required(ErrorMessage = "Не указан Email")]
         public String Email { get; set; }
         [Required(ErrorMessage = "Введите телефон"), Display(Name = "Телефон")]
         public String Phone { get; set; }
@@ -24,6 +25,7 @@ namespace WebApiAM.Models
         {
             return new User()
             {
+                Uid = Guid.NewGuid().ToString("D"),
                 FullName = m.FullName,
                 Phone = m.Phone,
                 Email = m.Email,
