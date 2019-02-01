@@ -7,7 +7,6 @@ namespace WebApiAM.Models
 {
     public class User
     {
-        public User() { }
         [Key]
         public int Id { get; set; }
         public String Uid { get; set; }
@@ -20,7 +19,7 @@ namespace WebApiAM.Models
         [Column(TypeName = "varchar(30)")]
         public String Login { get; set; }
         [ForeignKey(nameof(Role)), Display(Name = "Роль")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
