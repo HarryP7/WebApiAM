@@ -11,7 +11,7 @@ namespace WebApiAM.Models
     {
         [Key]
         public int Id { get; set; }
-        public String Uid { get; set; }
+        public String Uid { get; set; } = Guid.NewGuid().ToString("D");
         [Display(Name = "Широта"), Column(TypeName = "decimal(10, 6)")]
         public Decimal Lat { get; set; }
         [Display(Name = "Долгота"), Column(TypeName = "decimal(10, 6)")]
