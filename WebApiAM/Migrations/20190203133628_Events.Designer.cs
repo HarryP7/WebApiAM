@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiAM.Models;
 
 namespace WebApiAM.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190203133628_Events")]
+    partial class Events
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,8 +35,6 @@ namespace WebApiAM.Migrations
 
                     b.Property<DateTime>("EvDate");
 
-                    b.Property<int>("Fk_service");
-
                     b.Property<int>("Fk_user");
 
                     b.Property<int>("Status");
@@ -42,8 +42,6 @@ namespace WebApiAM.Migrations
                     b.Property<string>("Uid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Fk_service");
 
                     b.HasIndex("Fk_user");
 
@@ -61,30 +59,6 @@ namespace WebApiAM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("WebApiAM.Models.Service", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DatePlace");
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<decimal>("Lat")
-                        .HasColumnType("decimal(10, 6)");
-
-                    b.Property<decimal>("Lng")
-                        .HasColumnType("decimal(10, 6)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Service");
                 });
 
             modelBuilder.Entity("WebApiAM.Models.User", b =>
@@ -122,11 +96,6 @@ namespace WebApiAM.Migrations
 
             modelBuilder.Entity("WebApiAM.Models.Event", b =>
                 {
-                    b.HasOne("WebApiAM.Models.Service", "Service")
-                        .WithMany("Applications")
-                        .HasForeignKey("Fk_service")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("WebApiAM.Models.User", "User")
                         .WithMany("Events")
                         .HasForeignKey("Fk_user")
