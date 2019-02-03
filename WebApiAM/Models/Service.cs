@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdvAgency.Models
+namespace WebApiAM.Models
 {
     public class Service
     {
@@ -20,13 +20,8 @@ namespace AdvAgency.Models
         [Display(Name = "Дата размещения")]
         public DateTime DatePlace { get; set; }
         public string ImageUrl { get; set; }
-        //  [Display(Name = "Целевая группа"), Column(TypeName = "varchar(200)")]
-        //  public String TargetGroup { get; set; }
-        //  [Display(Name = "Описание"), Column(TypeName = "varchar(MAX)")]
-        //  public String Description { get; set; }
-        //  [Display(Name = "Отзыв"), Column(TypeName = "varchar(MAX)")]
-        //  public String Review { get; set; }
-        //  [Display(Name = "Рейтинг"), Column(TypeName = "varchar(MAX)")]
-        //  public int Rating { get; set; } //1-5
+        [InverseProperty(nameof(Event.Service))]
+        public virtual ICollection<Event> Events { get; set; } = new HashSet<Event>();
+        public IEnumerable<Event> even;
     }
 }
