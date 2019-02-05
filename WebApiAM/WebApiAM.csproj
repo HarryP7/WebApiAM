@@ -10,6 +10,7 @@
     <Compile Remove="Migrations\20190130212812_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190131150509_InitialDB.cs" />
     <Compile Remove="Migrations\20190131150509_InitialDB.Designer.cs" />
+    <Compile Remove="Models\Helpers\Extensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
