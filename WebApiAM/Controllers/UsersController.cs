@@ -31,7 +31,7 @@ namespace WebApiAM.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return db.Users.Include(p => p.Role).ToList();
+            return db.Users.Include(p => p.Role).Include(p => p.Events).ToList();
         }
 
         // GET: api/users/5

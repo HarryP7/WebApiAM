@@ -25,7 +25,7 @@ namespace WebApiAM.Controllers
             this.db = db;
             if (!db.Events.Any())
             {
-                db.Events.Add(new Event { EvDate = new DateTime(2015, 7, 20), Cost = 100});
+                db.Events.Add(new Event { EvDate = new DateTime(2015, 7, 20), Cost = 100, Status = EventStatus.Create, Fk_user = 1, Comment = "", Service = new Service { Lat = 56.129042M, Lng = 40.40703M, DatePlace = DateTime.Now, Title = "Hunt for unicorns" } });
                 db.SaveChanges();
             }
         }
@@ -40,36 +40,43 @@ namespace WebApiAM.Controllers
                 });
         }
         // GET: api/Event
-        [Authorize(Roles = "admin,user")]
-        [HttpGet("getevents")]
-        public IActionResult GetEvents()
+        //[Authorize(Roles = "admin,user")]
+        [HttpGet]
+        public IEnumerable<Event> GetEvents()
         {
-            try
-            {
-                IEnumerable<Event> events;
-                if (User.IsInRole("user"))
-                {
-                    var userId = int.Parse(User.Identity.Name);
-                    events = Fetch(ev => ev.Fk_user == userId);
-                }
-                else
-                    events = Fetch(o => true);
-
-                return Ok(new { events });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new
-                {
-                    message = "На сервере произошла ошибка, попробуйте позже"
-                });
-            }
+            return db.Events.Include(p => p.Service).ToList();
         }
+        //// GET: api/Event
+        //[Authorize(Roles = "admin,user")]
+        //[HttpGet("getevents")]
+        //public IActionResult GetEvents()
+        //{
+        //    try
+        //    {
+        //        IEnumerable<Event> events;
+        //        if (User.IsInRole("user"))
+        //        {
+        //            var userId = int.Parse(User.Identity.Name);
+        //            events = Fetch(ev => ev.Fk_user == userId);
+        //        }
+        //        else
+        //            events = Fetch(o => true);
+        //
+        //        return Ok(new { events });
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(new
+        //        {
+        //            message = "На сервере произошла ошибка, попробуйте позже"
+        //        });
+        //    }
+        //}
         // GET: api/Event/5
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(int id)
+        [HttpGet("{id}", Name = "GetEvent")]
+        public IActionResult GetEvent(int id)
         {
-            Event ev = db.Events.FirstOrDefault(p => p.Id == id);
+            Event ev = db.Events.Include(p => p.Service).FirstOrDefault(p => p.Id == id);
             if (ev == null)
                 return NotFound();
             return new ObjectResult(ev);
