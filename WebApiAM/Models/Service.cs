@@ -20,8 +20,8 @@ namespace WebApiAM.Models
         [Display(Name = "Дата размещения")]
         public DateTime DatePlace { get; set; }
         public string ImageUrl { get; set; }
-        [InverseProperty(nameof(Event.Service))]
-        public virtual ICollection<Event> Events { get; set; } = new HashSet<Event>();
-        public IEnumerable<Event> even;
+       // [InverseProperty(nameof(Event.Service))]
+       // public virtual ICollection<Event> Events { get; set; } = new HashSet<Event>();
+       // public IEnumerable<Event> even;
     }
 }

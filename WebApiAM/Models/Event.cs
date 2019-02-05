@@ -23,8 +23,6 @@ namespace WebApiAM.Models
         [Display(Name = "Пользователь"), ForeignKey(nameof(User))]
         public int Fk_user { get; set; }
         public virtual User User { get; set; }
-        [Display(Name = "Сервис"), ForeignKey(nameof(Service))]
-        public int Fk_service { get; set; }
         public virtual Service Service { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace WebApiAM.Models
 {
     public class EventViewModel
     {
-        public String Uid { get; set; } = Guid.NewGuid().ToString("D");
         [Display(Name = "Дата события")]
         public DateTime EvDate { get; set; }
         [Display(Name = "Стоимость"), Column(TypeName = "decimal(6, 2)")]
@@ -18,19 +17,16 @@ namespace WebApiAM.Models
         public string Comment { get; set; }
         [Display(Name = "Пользователь"), ForeignKey(nameof(User))]
         public int Fk_user { get; set; }
-        [Display(Name = "Сервис")]
-        public int Fk_service { get; set; }
 
         public static explicit operator Event(EventViewModel m)
         {
             return new Event()
             {
-                Uid = m.Uid,
+                Uid = Guid.NewGuid().ToString("D"),
                 EvDate = m.EvDate,
                 Cost = m.Cost,
                 Comment = m.Comment,
-                Fk_user = m.Fk_user,
-                Fk_service = m.Fk_service
+                Fk_user = m.Fk_user
             };
         }
     }
